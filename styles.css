@@ -85,7 +85,6 @@ body {
 
 .sidebar h2,
 .editor h2,
-.related-section h3,
 .web-search-section h2 {
   margin-top: 0;
   color: var(--accent-dark);
@@ -179,6 +178,9 @@ a.btn:hover {
   flex-direction: column;
   gap: 12px;
   margin-top: 12px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .note-item {

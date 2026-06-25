@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Royal Notes Archive</title>
+  <title>Royal Ticket Archive</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -11,16 +11,17 @@
 
   <header class="top-bar">
     <div>
-      <h1>👑 Royal Notes Archive</h1>
-      <p>Your princess-themed IT ticket library</p>
+      <h1>👑 Royal Ticket Archive</h1>
+      <p>Your princess-themed IT storage vault</p>
     </div>
-    <button id="newNoteBtn" class="btn btn-secondary">New Royal Note</button>
+    <a href="new-ticket.html" class="btn btn-primary">New Ticket</a>
   </header>
 
   <main class="layout">
     <aside class="sidebar card">
-      <h2>Castle Search</h2>
-      <input id="searchInput" class="input" type="text" placeholder="Search notes..." />
+      <h2>Search the Archive</h2>
+
+      <input id="searchInput" class="input" type="text" placeholder="Search tickets..." />
 
       <label class="label">Category</label>
       <select id="filterCategory" class="input">
@@ -36,58 +37,15 @@
       </select>
 
       <button id="clearFiltersBtn" class="btn btn-secondary full-width">Clear Filters</button>
-
-      <div class="archive-section">
-        <h2>Royal Archive</h2>
-        <div id="noteList" class="note-list"></div>
-      </div>
     </aside>
 
-    <section class="editor card">
-      <div class="editor-header">
-        <h2>Compose a Royal Note</h2>
-        <p>Save IT ticket notes using ticket number only.</p>
+    <section class="content card">
+      <div class="content-header">
+        <h2>Saved Tickets</h2>
+        <p>Click a ticket to view or edit it.</p>
       </div>
 
-      <form id="noteForm">
-        <label class="label" for="ticketNumber">Ticket Number *</label>
-        <input id="ticketNumber" class="input" type="text" placeholder="e.g. IT-45821" required />
-
-        <label class="label" for="title">Title *</label>
-        <input id="title" class="input" type="text" placeholder="e.g. VPN login failed after reset" required />
-
-        <label class="label" for="category">Category *</label>
-        <select id="category" class="input" required>
-          <option value="">Select category</option>
-          <option value="VPN">VPN</option>
-          <option value="Email">Email</option>
-          <option value="Printer">Printer</option>
-          <option value="Hardware">Hardware</option>
-          <option value="Software">Software</option>
-          <option value="Network">Network</option>
-          <option value="Account">Account</option>
-          <option value="Other">Other</option>
-        </select>
-
-        <label class="label" for="tags">Tags</label>
-        <input id="tags" class="input" type="text" placeholder="vpn, password reset, mfa" />
-
-        <label class="label" for="symptoms">Symptoms</label>
-        <textarea id="symptoms" class="textarea" placeholder="Describe the issue..."></textarea>
-
-        <label class="label" for="resolution">Resolution</label>
-        <textarea id="resolution" class="textarea" placeholder="What fixed it..."></textarea>
-
-        <label class="label" for="notes">Additional Notes</label>
-        <textarea id="notes" class="textarea" placeholder="Extra context, steps, or reminders..."></textarea>
-
-        <div class="button-row">
-          <button type="submit" class="btn btn-primary">Save Royal Note</button>
-          <button type="button" id="deleteBtn" class="btn btn-danger">Delete Note</button>
-        </div>
-      </form>
-
-      <div id="saveMessage" class="save-message"></div>
+      <div id="ticketList" class="ticket-list"></div>
     </section>
   </main>
 

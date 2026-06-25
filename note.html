@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Note Details</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="background-sparkles"></div>
+
+  <header class="top-bar">
+    <div>
+      <h1>👑 Royal Note Details</h1>
+      <p>View one note and search the web for related knowledge</p>
+    </div>
+    <a href="index.html" class="btn btn-secondary">Back to Archive</a>
+  </header>
+
+  <main class="single-page">
+    <section class="card detail-card">
+      <div id="noteDetails"></div>
+
+      <div class="web-search-section">
+        <h2>✨ Search the Web for More Knowledge</h2>
+        <p>
+          This will search online for general helpful information about this topic.
+          It will not search your previous notes.
+        </p>
+
+        <button id="searchWebBtn" class="btn btn-primary">Search Online</button>
+        <div id="webStatus" class="save-message"></div>
+        <div id="webResults"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="note.js"></script>
+</body>
+</html>

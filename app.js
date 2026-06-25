@@ -39,7 +39,7 @@ function getFormData() {
       .filter(Boolean),
     symptoms: symptomsInput.value.trim(),
     resolution: resolutionInput.value.trim(),
-    notes: notesInput.value.trim(),
+    notes: notesInput.value.trim()
   };
 }
 
@@ -59,6 +59,15 @@ function populateForm(note) {
   resolutionInput.value = note.resolution;
   notesInput.value = note.notes;
   saveMessage.textContent = `Editing note ${note.ticketNumber}`;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function renderNotes() {
@@ -99,20 +108,13 @@ function renderNotes() {
         <div class="ticket">${escapeHtml(note.ticketNumber)}</div>
         <div class="meta">${escapeHtml(note.category)} • ${new Date(note.updatedAt).toLocaleDateString()}</div>
       `;
+
       div.addEventListener("click", () => {
-        window.location.href = `note.html?id=${encodeURIComponent(note.id)}`;
+        populateForm(note);
       });
+
       noteList.appendChild(div);
     });
-}
-
-function escapeHtml(str) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
 }
 
 noteForm.addEventListener("submit", (e) => {
@@ -148,19 +150,15 @@ noteForm.addEventListener("submit", (e) => {
   saveNotes();
   renderNotes();
   saveMessage.textContent = `✨ Royal note saved for ${data.ticketNumber}!`;
-
-  const current = editingId ? notes.find(n => n.id === editingId) : notes[0];
-  if (current) {
-    window.location.href = `note.html?id=${encodeURIComponent(current.id)}`;
-  }
-
-  editingId = null;
   noteForm.reset();
-});
+  editingId = null;
+}
+
+);
 
 deleteBtn.addEventListener("click", () => {
   if (!editingId) {
-    alert("Select a note to delete.");
+    alert("Click a note in the archive first to select it.");
     return;
   }
 
@@ -177,6 +175,7 @@ deleteBtn.addEventListener("click", () => {
 });
 
 newNoteBtn.addEventListener("click", clearForm);
+
 searchInput.addEventListener("input", renderNotes);
 filterCategory.addEventListener("change", renderNotes);
 
@@ -185,5 +184,7 @@ clearFiltersBtn.addEventListener("click", () => {
   filterCategory.value = "";
   renderNotes();
 });
+
+renderNotes();
 
 renderNotes();

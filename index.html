@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Notes</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="background-sparkles"></div>
+
+  <header class="top-bar">
+    <div>
+      <h1>👑 Royal Notes</h1>
+      <p>Your princess-themed IT ticket archive</p>
+    </div>
+    <button id="newNoteBtn" class="btn btn-secondary">New Royal Note</button>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar card">
+      <h2>Castle Search</h2>
+      <input id="searchInput" class="input" type="text" placeholder="Search notes..." />
+      
+      <label class="label">Category</label>
+      <select id="filterCategory" class="input">
+        <option value="">All Categories</option>
+        <option value="VPN">VPN</option>
+        <option value="Email">Email</option>
+        <option value="Printer">Printer</option>
+        <option value="Hardware">Hardware</option>
+        <option value="Software">Software</option>
+        <option value="Network">Network</option>
+        <option value="Account">Account</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <button id="clearFiltersBtn" class="btn btn-secondary full-width">Clear Filters</button>
+
+      <div class="archive-section">
+        <h2>Royal Archive</h2>
+        <div id="noteList" class="note-list"></div>
+      </div>
+    </aside>
+
+    <section class="editor card">
+      <div class="editor-header">
+        <h2>Compose a Royal Note</h2>
+        <p>Save IT ticket notes by ticket number only.</p>
+      </div>
+
+      <form id="noteForm">
+        <label class="label" for="ticketNumber">Ticket Number *</label>
+        <input id="ticketNumber" class="input" type="text" placeholder="e.g. IT-45821" required />
+
+        <label class="label" for="title">Title *</label>
+        <input id="title" class="input" type="text" placeholder="e.g. VPN login failed after reset" required />
+
+        <label class="label" for="category">Category *</label>
+        <select id="category" class="input" required>
+          <option value="">Select category</option>
+          <option value="VPN">VPN</option>
+          <option value="Email">Email</option>
+          <option value="Printer">Printer</option>
+          <option value="Hardware">Hardware</option>
+          <option value="Software">Software</option>
+          <option value="Network">Network</option>
+          <option value="Account">Account</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label class="label" for="tags">Tags</label>
+        <input id="tags" class="input" type="text" placeholder="vpn, password reset, mfa" />
+
+        <label class="label" for="symptoms">Symptoms</label>
+        <textarea id="symptoms" class="textarea" placeholder="Describe the issue..."></textarea>
+
+        <label class="label" for="resolution">Resolution</label>
+        <textarea id="resolution" class="textarea" placeholder="What fixed it..."></textarea>
+
+        <label class="label" for="notes">Additional Notes</label>
+        <textarea id="notes" class="textarea" placeholder="Extra context, steps, or reminders..."></textarea>
+
+        <div class="button-row">
+          <button type="submit" class="btn btn-primary">Save Royal Note</button>
+          <button type="button" id="deleteBtn" class="btn btn-danger">Delete Note</button>
+        </div>
+      </form>
+
+      <div id="saveMessage" class="save-message"></div>
+
+      <div id="relatedSection" class="related-section">
+        <h3>✨ Related Notes</h3>
+        <div id="relatedNotes"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

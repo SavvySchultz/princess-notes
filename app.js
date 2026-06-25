@@ -93,7 +93,7 @@ function renderNotes() {
     .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
     .forEach(note => {
       const div = document.createElement("div");
-      div.className = "note-item" + (note.id === editingId ? " active" : "");
+      div.className = "note-item";
       div.innerHTML = `
         <h4>${escapeHtml(note.title)}</h4>
         <div class="ticket">${escapeHtml(note.ticketNumber)}</div>
@@ -149,12 +149,9 @@ noteForm.addEventListener("submit", (e) => {
   renderNotes();
   saveMessage.textContent = `✨ Royal note saved for ${data.ticketNumber}!`;
 
-  const shouldSearch = confirm("Would you like to open this note and search the web for related knowledge?");
-  if (shouldSearch) {
-    const current = editingId ? notes.find(n => n.id === editingId) : notes[0];
-    if (current) {
-      window.location.href = `note.html?id=${encodeURIComponent(current.id)}`;
-    }
+  const current = editingId ? notes.find(n => n.id === editingId) : notes[0];
+  if (current) {
+    window.location.href = `note.html?id=${encodeURIComponent(current.id)}`;
   }
 
   editingId = null;

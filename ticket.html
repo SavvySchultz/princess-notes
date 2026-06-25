@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Ticket</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="background-sparkles"></div>
+
+  <header class="top-bar">
+    <div>
+      <h1>👑 Royal Ticket</h1>
+      <p>View, edit, or delete this saved ticket</p>
+    </div>
+    <a href="index.html" class="btn btn-secondary">Back to Archive</a>
+  </header>
+
+  <main class="single-page">
+    <section class="card detail-card">
+      <div id="ticketView"></div>
+
+      <div class="button-row">
+        <button id="editBtn" class="btn btn-primary">Edit Ticket</button>
+        <button id="deleteBtn" class="btn btn-danger">Delete Ticket</button>
+      </div>
+
+      <form id="editForm" style="display:none; margin-top: 20px;">
+        <label class="label" for="editTicketNumber">Ticket Number *</label>
+        <input id="editTicketNumber" class="input" type="text" required />
+
+        <label class="label" for="editTitle">Title *</label>
+        <input id="editTitle" class="input" type="text" required />
+
+        <label class="label" for="editCategory">Category *</label>
+        <select id="editCategory" class="input" required>
+          <option value="">Select category</option>
+          <option value="VPN">VPN</option>
+          <option value="Email">Email</option>
+          <option value="Printer">Printer</option>
+          <option value="Hardware">Hardware</option>
+          <option value="Software">Software</option>
+          <option value="Network">Network</option>
+          <option value="Account">Account</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label class="label" for="editTags">Tags</label>
+        <input id="editTags" class="input" type="text" />
+
+        <label class="label" for="editSymptoms">Symptoms</label>
+        <textarea id="editSymptoms" class="textarea"></textarea>
+
+        <label class="label" for="editResolution">Resolution</label>
+        <textarea id="editResolution" class="textarea"></textarea>
+
+        <label class="label" for="editNotes">Additional Notes</label>
+        <textarea id="editNotes" class="textarea"></textarea>
+
+        <div class="button-row">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="button" id="cancelEditBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+
+      <div id="ticketMessage" class="save-message"></div>
+    </section>
+  </main>
+
+  <script src="ticket.js"></script>
+</body>
+</html>

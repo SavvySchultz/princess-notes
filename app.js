@@ -15,8 +15,6 @@ const clearFiltersBtn = document.getElementById("clearFiltersBtn");
 const newNoteBtn = document.getElementById("newNoteBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 const saveMessage = document.getElementById("saveMessage");
-const relatedNotesContainer = document.getElementById("relatedNotes");
-const relatedSection = document.getElementById("relatedSection");
 
 let notes = loadNotes();
 let editingId = null;
@@ -49,8 +47,6 @@ function clearForm() {
   editingId = null;
   noteForm.reset();
   saveMessage.textContent = "";
-  relatedNotesContainer.innerHTML = "";
-  relatedSection.style.display = "none";
 }
 
 function populateForm(note) {
@@ -104,95 +100,10 @@ function renderNotes() {
         <div class="meta">${escapeHtml(note.category)} • ${new Date(note.updatedAt).toLocaleDateString()}</div>
       `;
       div.addEventListener("click", () => {
-        populateForm(note);
-        showRelatedNotes(note);
+        window.location.href = `note.html?id=${encodeURIComponent(note.id)}`;
       });
       noteList.appendChild(div);
     });
-}
-
-function showRelatedNotes(currentNote) {
-  const related = findRelatedNotes(currentNote);
-
-  relatedNotesContainer.innerHTML = "";
-
-  if (related.length === 0) {
-    relatedNotesContainer.innerHTML = `<div class="small">No related notes found yet.</div>`;
-    relatedSection.style.display = "block";
-    return;
-  }
-
-  related.forEach(note => {
-    const card = document.createElement("div");
-    card.className = "related-card";
-    card.innerHTML = `
-      <strong>${escapeHtml(note.title)}</strong>
-      <div class="small">Ticket: ${escapeHtml(note.ticketNumber)} | Category: ${escapeHtml(note.category)}</div>
-      <div class="small">Tags: ${note.tags.map(escapeHtml).join(", ")}</div>
-      <div class="small">${escapeHtml(note.resolution || note.symptoms || note.notes || "")}</div>
-    `;
-    card.addEventListener("click", () => {
-      populateForm(note);
-      showRelatedNotes(note);
-    });
-    relatedNotesContainer.appendChild(card);
-  });
-
-  relatedSection.style.display = "block";
-}
-
-function findRelatedNotes(currentNote) {
-  const currentWords = new Set(
-    [
-      currentNote.title,
-      currentNote.category,
-      currentNote.tags.join(" "),
-      currentNote.symptoms,
-      currentNote.resolution,
-      currentNote.notes
-    ]
-      .join(" ")
-      .toLowerCase()
-      .split(/[^a-z0-9]+/)
-      .filter(Boolean)
-  );
-
-  return notes
-    .filter(note => note.id !== currentNote.id)
-    .map(note => {
-      const noteWords = new Set(
-        [
-          note.title,
-          note.category,
-          note.tags.join(" "),
-          note.symptoms,
-          note.resolution,
-          note.notes
-        ]
-          .join(" ")
-          .toLowerCase()
-          .split(/[^a-z0-9]+/)
-          .filter(Boolean)
-      );
-
-      let score = 0;
-
-      if (note.category === currentNote.category) score += 4;
-
-      note.tags.forEach(tag => {
-        if (currentNote.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())) score += 2;
-      });
-
-      noteWords.forEach(word => {
-        if (currentWords.has(word) && word.length > 2) score += 1;
-      });
-
-      return { note, score };
-    })
-    .filter(item => item.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 5)
-    .map(item => item.note);
 }
 
 function escapeHtml(str) {
@@ -238,21 +149,17 @@ noteForm.addEventListener("submit", (e) => {
   renderNotes();
   saveMessage.textContent = `✨ Royal note saved for ${data.ticketNumber}!`;
 
-  const current = editingId
-    ? notes.find(n => n.id === editingId)
-    : notes[0];
-
-  setTimeout(() => {
-    const shouldSearch = confirm("Would you like me to search for related notes in the royal archive?");
-    if (shouldSearch && current) {
-      showRelatedNotes(current);
+  const shouldSearch = confirm("Would you like to open this note and search the web for related knowledge?");
+  if (shouldSearch) {
+    const current = editingId ? notes.find(n => n.id === editingId) : notes[0];
+    if (current) {
+      window.location.href = `note.html?id=${encodeURIComponent(current.id)}`;
     }
-  }, 150);
+  }
 
-  editingId = current?.id || null;
-}
-
-);
+  editingId = null;
+  noteForm.reset();
+});
 
 deleteBtn.addEventListener("click", () => {
   if (!editingId) {
@@ -273,7 +180,6 @@ deleteBtn.addEventListener("click", () => {
 });
 
 newNoteBtn.addEventListener("click", clearForm);
-
 searchInput.addEventListener("input", renderNotes);
 filterCategory.addEventListener("change", renderNotes);
 
@@ -284,4 +190,3 @@ clearFiltersBtn.addEventListener("click", () => {
 });
 
 renderNotes();
-relatedSection.style.display = "none";
